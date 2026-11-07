@@ -3,10 +3,10 @@ import i18n from './i18n'
 
 export const manifest = setupManifest({
   id: 'robosats',
-  title: 'Robosats',
-  license: 'AGPL-V3',
+  title: 'RoboSats',
+  license: 'AGPL-3.0',
   packageRepo: 'https://github.com/Start9-Community/robosats-startos',
-  upstreamRepo: 'https://github.com/Reckless-Satoshi/robosats',
+  upstreamRepo: 'https://github.com/RoboSats/robosats',
   marketingUrl: 'https://learn.robosats.com/',
   donationUrl: 'https://learn.robosats.com/contribute/donate/',
   description: i18n.description,

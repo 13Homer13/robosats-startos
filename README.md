@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="icon.svg" alt="Robosats Logo" width="21%">
+  <img src="icon.svg" alt="RoboSats Logo" width="21%">
 </p>
 
-# Robosats on StartOS
+# RoboSats on StartOS
 
 > Everything not listed in this document should behave the same as upstream
-> Robosats. If a feature, setting, or behavior is not mentioned here, the
+> RoboSats. If a feature, setting, or behavior is not mentioned here, the
 > upstream documentation is accurate and fully applicable — see the
 > Documentation section of `instructions.md` for links.
 
-[Robosats](https://github.com/Reckless-Satoshi/robosats) is a peer-to-peer Bitcoin exchange over Lightning, where trades are escrowed by a coordinator and everything happens over Tor. This package runs the **client**, not a coordinator: your own copy of the interface, connecting out to the coordinators you choose.
+[RoboSats](https://github.com/RoboSats/robosats) is a peer-to-peer Bitcoin exchange over Lightning, where trades are escrowed by a coordinator and everything happens over Tor. This package runs the **client**, not a coordinator: your own copy of the interface, connecting out to the coordinators you choose.
 
-- **Upstream repo:** <https://github.com/Reckless-Satoshi/robosats>
+- **Upstream repo:** <https://github.com/RoboSats/robosats>
 - **Wrapper repo:** <https://github.com/Start9-Community/robosats-startos>
 
 ---
@@ -57,7 +57,7 @@ One volume.
 | ------ | ----------- | ---------------------------- |
 | `main` | `/root`     | Whatever the client persists |
 
-**There is very little here.** Robosats' client is a front end: orders, escrow, and settlement live with the coordinator and on Lightning, and your identity is a token you hold in the browser. Nothing on this volume is a wallet or a key.
+**There is very little here.** RoboSats' client is a front end: orders, escrow, and settlement live with the coordinator and on Lightning, and your identity is a token you hold in the browser. Nothing on this volume is a wallet or a key.
 
 ## File Models
 
@@ -71,9 +71,9 @@ One, and it is required.
 | ---------- | -------- | ---------------------- | ------------------------------- |
 | Tor        | Yes      | `tor`                  | Coordinators are onion services |
 
-**Tor is not optional here, and that is upstream's design rather than a packaging choice.** Robosats coordinators are reachable as onion services; without Tor the client has nowhere to connect.
+**Tor is not optional here, and that is upstream's design rather than a packaging choice.** RoboSats coordinators are reachable as onion services; without Tor the client has nowhere to connect.
 
-**The SOCKS address is resolved with a fallback**, so it stays constant whether Tor is installed, updated, or removed. That is deliberate: installing or restarting Tor never restarts Robosats, and it is split into an address and a port because the client takes them as two separate values.
+**The SOCKS address is resolved with a fallback**, so it stays constant whether Tor is installed, updated, or removed. That is deliberate: installing or restarting Tor never restarts RoboSats, and it is split into an address and a port because the client takes them as two separate values.
 
 ## Network Access and Interfaces
 
@@ -81,11 +81,11 @@ One interface.
 
 | Interface | Id   | Type | Port  | Description         |
 | --------- | ---- | ---- | ----- | ------------------- |
-| Web UI    | `ui` | ui   | 12596 | The Robosats client |
+| Web UI    | `ui` | ui   | 12596 | The RoboSats client |
 
 Bound on the `ui-multi` MultiHost as HTTPS and not masked. The client terminates its own TLS on that port with a self-signed certificate, so StartOS serves the address with its own certificate and re-encrypts to the container without validating the client's — that leg never leaves the container bridge.
 
-**There is no login.** Robosats has no server-side account — your robot identity is a token generated in the browser — so anyone who can reach this address gets the client, and whether they get _your_ trades depends on whether they have your token.
+**There is no login.** RoboSats has no server-side account — your robot identity is a token generated in the browser — so anyone who can reach this address gets the client, and whether they get _your_ trades depends on whether they have your token.
 
 All outbound traffic to coordinators goes through Tor. The client makes no direct clearnet connections to them.
 
@@ -103,7 +103,7 @@ Coordinators are selected inside the interface. The client ships knowing the wel
 
 ## Actions
 
-**None.** The package ships an empty action set — everything Robosats does is configured inside its own interface.
+**None.** The package ships an empty action set — everything RoboSats does is configured inside its own interface.
 
 ## Tasks
 
@@ -127,7 +127,7 @@ The `main` volume is copied wholesale — `sdk.Backups.ofVolumes('main')`.
 
 **There is nothing valuable in it.** Your robot token lives in the browser, your funds are in Lightning, and your orders are with the coordinator — a backup here restores a client, not an identity or a balance.
 
-**Losing your robot token is not recoverable from this backup**, or from anywhere else. That is a property of Robosats, not of the packaging.
+**Losing your robot token is not recoverable from this backup**, or from anywhere else. That is a property of RoboSats, not of the packaging.
 
 ## Limitations and Differences
 
